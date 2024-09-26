@@ -1,29 +1,54 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useForm from "../../hooks/useForm";
+import supabase from "../../supabase/client";
+import { useState } from "react";
 
-const initialState = {
-  emailOrUsername: "",
-  password: "",
+const signIn = async (email: string, password: string) => {
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+  return { data, error };
 };
 
 const SignInForm = () => {
-  const [inputs, handleChange] = useForm(initialState);
+  const [inputs, onChange] = useForm();
+  const [error, setError] = useState<string | null>(null);
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!inputs.email.length || !inputs.password.length) {
+      setError("Please fill in all fields.");
+    } else {
+      const response = await signIn(inputs.email, inputs.password);
+      if (response.error) {
+        setError(response.error.message);
+      } else {
+        navigate("/chats");
+      }
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onChange(e);
+    setError("");
+  };
+
   return (
-    <form className="flex flex-col gap-4">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
       <div className="flex flex-col">
-        <label className="ml-4" htmlFor="emailOrUsername">
-          Email or Username
+        <label className="ml-4" htmlFor="email">
+          Email
         </label>
         <input
-          value={inputs.emailOrUsername}
+          value={inputs.email}
           onChange={handleChange}
           className="hover:border-accent mt-2 w-full rounded-full border px-4 py-1 font-normal shadow-sm transition-[border-color] focus:outline-none"
-          id="emailOrUsername"
+          id="email"
           type="text"
         />
-        <div className="mt-1 h-4 text-center text-red-600">
-          This field is required
-        </div>
       </div>
 
       <div className="flex flex-col">
@@ -37,7 +62,6 @@ const SignInForm = () => {
           id="password"
           type="password"
         />
-        <div className="mt-1 h-4 text-center text-red-600"></div>
       </div>
 
       <p className="mt-2">
@@ -52,6 +76,7 @@ const SignInForm = () => {
       >
         Sign In
       </button>
+      <div className="mt-1 h-4 text-center text-red-600">{error}</div>
     </form>
   );
 };

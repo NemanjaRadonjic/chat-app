@@ -1,7 +1,13 @@
 import { useState } from "react";
-import { AuthFormType } from "../helpers/types";
 
-const useForm = (initialState: AuthFormType) => {
+const initialState = {
+  username: "",
+  email: "",
+  password: "",
+  repeatPassword: "",
+};
+
+const useForm = () => {
   const [state, setState] = useState(initialState);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>

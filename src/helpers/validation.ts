@@ -34,7 +34,7 @@ export const validatePassword = (
     return "Password is too short.";
   } else if (password.length > 21) {
     return "Password is too long.";
-  } else if (password !== repeatPassword && repeatPassword?.length) {
+  } else if (password !== repeatPassword && repeatPassword.length) {
     if (setErrors) {
       setErrors((prevState) => ({
         ...prevState,
