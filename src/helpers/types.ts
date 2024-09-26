@@ -24,3 +24,5 @@ export type AuthFormErrorsType = {
   repeatPassword?: string | null;
   main?: string | null;
 };
+
+export type UsersType = { id: string; email: string }[];
