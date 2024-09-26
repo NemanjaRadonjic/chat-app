@@ -1,14 +1,14 @@
-import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
+import SignOutButton from "./components/SignOutButton";
+import AuthOptions from "./components/AuthOptions";
 
 const AuthBar = () => {
+  const currentUser = useSelector((state: RootState) => state.currentUser);
+
   return (
     <ul className="flex flex-row gap-4">
-      <li>
-        <Link to="sign-in">Sign In</Link>
-      </li>
-      <li>
-        <Link to="sign-up">Sign Up</Link>
-      </li>
+      {currentUser ? <SignOutButton /> : <AuthOptions />}
     </ul>
   );
 };

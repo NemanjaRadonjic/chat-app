@@ -2,6 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 import useForm from "../../hooks/useForm";
 import supabase from "../../supabase/client";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { signInAction } from "../../store/reducers/currentUser";
 
 const signIn = async (email: string, password: string) => {
   const { data, error } = await supabase.auth.signInWithPassword({
@@ -16,6 +18,7 @@ const SignInForm = () => {
   const [error, setError] = useState<string | null>(null);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -26,6 +29,11 @@ const SignInForm = () => {
       if (response.error) {
         setError(response.error.message);
       } else {
+        window.localStorage.setItem(
+          "currentUser",
+          JSON.stringify(response.data),
+        );
+        dispatch(signInAction(response.data));
         navigate("/chats");
       }
     }
