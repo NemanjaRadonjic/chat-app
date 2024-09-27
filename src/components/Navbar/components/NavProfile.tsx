@@ -1,7 +1,9 @@
 import { useDispatch } from "react-redux";
 import { signOutAction } from "../../../store/reducers/currentUser";
 
-const SignOutButton = () => {
+type CurrentUser = { email: string };
+
+const NavProfile = ({ currentUser }: { currentUser: CurrentUser }) => {
   const dispatch = useDispatch();
 
   const handleClick = () => {
@@ -10,10 +12,11 @@ const SignOutButton = () => {
   };
 
   return (
-    <li>
+    <li className="flex gap-6">
+      <div>{currentUser.email}</div>
       <button onClick={handleClick}>Sign Out</button>
     </li>
   );
 };
 
-export default SignOutButton;
+export default NavProfile;

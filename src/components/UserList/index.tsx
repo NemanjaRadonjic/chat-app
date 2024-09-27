@@ -31,7 +31,9 @@ const UserList = ({
 
   const renderUsers = sortedUsers
     .filter((user) => user.id !== currentUserId)
-    .map((user) => <User key={user.id} user={user} />);
+    .map((user) => (
+      <User key={user.id} currentUserId={currentUserId} user={user} />
+    ));
   return <div className="flex gap-12 p-14">{renderUsers}</div>;
 };
 

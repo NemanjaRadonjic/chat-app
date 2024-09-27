@@ -9,6 +9,7 @@ import Root from "./routes/Root.tsx";
 import SignIn from "./routes/SignIn.tsx";
 import SignUp from "./routes/SignUp.tsx";
 import Chats from "./routes/Chats.tsx";
+import Chat from "./routes/Chat.tsx";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,7 @@ const router = createBrowserRouter([
       { path: "/sign-in", element: <SignIn /> },
       { path: "/sign-Up", element: <SignUp /> },
       { path: "/chats", element: <Chats /> },
+      { path: "/chats/:chatId", element: <Chat /> },
     ],
   },
 ]);
