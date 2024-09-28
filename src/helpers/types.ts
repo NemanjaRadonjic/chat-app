@@ -26,3 +26,11 @@ export type AuthFormErrorsType = {
 };
 
 export type UsersType = { id: string; email: string }[];
+
+export type MessageType = {
+  chatId: string;
+  content: string;
+  created_at: string;
+  id: string;
+  author: string;
+};
