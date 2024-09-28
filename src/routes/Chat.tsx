@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import supabase from "../supabase/client";
 import Message from "../components/Message";
 import { MessageType } from "../helpers/types";
+import { flushSync } from "react-dom";
 
 type PayloadType = {
   new: MessageType;
@@ -38,6 +39,7 @@ const Chat = () => {
   const isOnline = onlineIds.includes(recipient.id);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<MessageType[]>([]);
+  const messagesDivRef = useRef<HTMLDivElement>(null);
   const { chatId } = useParams();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -45,7 +47,6 @@ const Chat = () => {
     await createMessage(message, currentUserId, chatId);
     setMessage("");
   };
-
   useEffect(() => {
     const channel = supabase
       .channel("messages")
@@ -57,7 +58,13 @@ const Chat = () => {
           table: "messages",
         },
         (payload: PayloadType) => {
-          setMessages((prevState) => [...prevState, { ...payload.new }]);
+          flushSync(() =>
+            setMessages((prevState) => [...prevState, { ...payload.new }]),
+          );
+          if (messagesDivRef.current) {
+            messagesDivRef.current.scrollTop =
+              messagesDivRef.current.scrollHeight;
+          }
         },
       )
       .subscribe();
@@ -84,7 +91,10 @@ const Chat = () => {
         You are chatting with {recipient?.email}{" "}
         {isOnline ? "is online" : "is offline"}
       </div>
-      <div className="flex grow flex-col gap-4 rounded p-4 shadow-md">
+      <div
+        ref={messagesDivRef}
+        className="flex grow flex-col gap-4 overflow-y-scroll scroll-smooth rounded p-4 shadow-md"
+      >
         {renderMessages}
       </div>
       <form onSubmit={handleSubmit} className="flex">

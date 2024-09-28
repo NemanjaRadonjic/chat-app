@@ -10,6 +10,7 @@ import SignIn from "./routes/SignIn.tsx";
 import SignUp from "./routes/SignUp.tsx";
 import Chats from "./routes/Chats.tsx";
 import Chat from "./routes/Chat.tsx";
+import ProtectedRoute from "./routes/ProtectedRoute.tsx";
 
 const router = createBrowserRouter([
   {
@@ -19,7 +20,11 @@ const router = createBrowserRouter([
       { path: "/sign-in", element: <SignIn /> },
       { path: "/sign-Up", element: <SignUp /> },
       { path: "/chats", element: <Chats /> },
-      { path: "/chats/:chatId", element: <Chat /> },
+      {
+        path: "/chats/:chatId",
+        element: <ProtectedRoute />,
+        children: [{ path: "/chats/:chatId", element: <Chat /> }],
+      },
     ],
   },
 ]);
