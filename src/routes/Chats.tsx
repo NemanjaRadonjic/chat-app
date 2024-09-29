@@ -1,29 +1,24 @@
-import { useEffect, useState } from "react";
-import supabase from "../supabase/client";
 import UserList from "../components/UserList";
 import { UsersType } from "../helpers/types";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 
-const fetchUsers = async () => {
-  const { data, error } = await supabase.from("users").select();
-  return { data, error };
+import { useLoaderData } from "react-router-dom";
+
+type LoaderData = {
+  data: UsersType;
+  error: {
+    message: string;
+  };
 };
 
 const Chats = () => {
-  const [users, setUsers] = useState<UsersType>([]);
+  const { data: users, error } = useLoaderData() as LoaderData;
   const onlineIds = useSelector((state: RootState) => state.onlineUsers);
 
-  useEffect(() => {
-    (async () => {
-      const response = await fetchUsers();
-      if (response.error) {
-        console.log(response.error);
-      } else {
-        setUsers(response.data || []);
-      }
-    })();
-  }, []);
+  if (error) {
+    throw new Error(error.message);
+  }
 
   return (
     <div>

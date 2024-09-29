@@ -9,28 +9,12 @@ import { flushSync } from "react-dom";
 import Avatar from "../components/Avatar";
 import { IoMdSend } from "react-icons/io";
 import { messagesWithAvatar } from "../helpers";
+import Loader from "../components/Loader";
+import ErrorElement from "../components/Error";
+import { createMessage, getMessages } from "../helpers/requests";
 
 type PayloadType = {
   new: MessageType;
-};
-
-const createMessage = async (
-  content: string,
-  author: string,
-  chatId: string | undefined,
-) => {
-  const { error } = await supabase
-    .from("messages")
-    .insert({ content, chatId, author });
-  return error ? error : null;
-};
-
-const getMessages = async (chatId: string | undefined) => {
-  const { data } = await supabase
-    .from("messages")
-    .select()
-    .eq("chatId", chatId);
-  return data;
 };
 
 const Chat = () => {
@@ -40,8 +24,13 @@ const Chat = () => {
   );
   const { state: recipient } = useLocation();
   const isOnline = onlineIds.includes(recipient.id);
+
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<MessageType[]>([]);
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
+
   const messagesDivRef = useRef<HTMLDivElement>(null);
   const { chatId } = useParams();
 
@@ -80,8 +69,14 @@ const Chat = () => {
 
   useEffect(() => {
     (async () => {
-      const response = await getMessages(chatId);
-      setMessages(response || []);
+      const { data, error } = await getMessages(chatId);
+      setIsLoading(false);
+      if (error) {
+        setIsError(true);
+        throw new Error(error.message);
+      } else {
+        setMessages(data || []);
+      }
     })();
   }, [chatId]);
 
@@ -102,12 +97,21 @@ const Chat = () => {
         <Avatar email={recipient?.email} isOnline={isOnline} />
         <div>{recipient?.email}</div>
       </div>
-      <div
-        ref={messagesDivRef}
-        className="flex grow flex-col-reverse gap-4 overflow-y-auto scroll-smooth rounded p-4 shadow-inner"
-      >
-        {renderMessages.reverse()}
-      </div>
+      {isLoading ? (
+        <Loader />
+      ) : isError ? (
+        <div className="flex grow items-center">
+          <ErrorElement>Something went wrong</ErrorElement>
+        </div>
+      ) : (
+        <div
+          ref={messagesDivRef}
+          className="flex grow flex-col-reverse gap-4 overflow-y-auto scroll-smooth rounded p-4 shadow-inner"
+        >
+          {renderMessages.reverse()}
+        </div>
+      )}
+
       <form onSubmit={handleSubmit} className="flex">
         <input
           onChange={(e) => setMessage(e.target.value)}

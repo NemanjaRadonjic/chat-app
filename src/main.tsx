@@ -12,21 +12,42 @@ import Chats from "./routes/Chats.tsx";
 import Chat from "./routes/Chat.tsx";
 import ProtectedRoute from "./routes/ProtectedRoute.tsx";
 import Error from "./components/Error/index.tsx";
+import supabase from "./supabase/client.ts";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
     children: [
-      { path: "/sign-in", element: <SignIn /> },
-      { path: "/sign-Up", element: <SignUp /> },
-      { path: "/chats", element: <Chats /> },
+      {
+        path: "/sign-in",
+        element: <SignIn />,
+        errorElement: <Error>Something went wrong</Error>,
+      },
+      {
+        path: "/sign-Up",
+        element: <SignUp />,
+        errorElement: <Error>Something went wrong</Error>,
+      },
+      {
+        path: "/chats",
+        element: <Chats />,
+        loader: async () => await supabase.from("users").select(),
+        errorElement: <Error>Something went wrong</Error>,
+      },
       {
         path: "/chats/:chatId",
         element: <ProtectedRoute />,
-        children: [{ path: "/chats/:chatId", element: <Chat /> }],
+        errorElement: <Error>Something went wrong</Error>,
+        children: [
+          {
+            path: "/chats/:chatId",
+            element: <Chat />,
+            errorElement: <Error>Something went wrong</Error>,
+          },
+        ],
       },
-      { path: "*", element: <Error msg="Not Found." /> },
+      { path: "*", element: <Error>Not Found.</Error> },
     ],
   },
 ]);

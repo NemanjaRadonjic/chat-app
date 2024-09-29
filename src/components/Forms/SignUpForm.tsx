@@ -6,14 +6,11 @@ import {
   validateEmail,
   validatePassword,
   validateRepeatPassword,
-  validateUsername,
 } from "../../helpers/validation";
-import supabase from "../../supabase/client";
+import { signUp } from "../../helpers/requests";
 
 const getValidationFunction = (type: string) => {
   switch (type) {
-    case "username":
-      return validateUsername;
     case "email":
       return validateEmail;
     case "password":
@@ -24,20 +21,10 @@ const getValidationFunction = (type: string) => {
 };
 
 const initialErrorState = {
-  username: "",
   email: "",
   password: "",
   repeatPassword: "",
   main: null,
-};
-
-const signUp = async (username: string, email: string, password: string) => {
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: { data: { username } },
-  });
-  return { data, error };
 };
 
 const SignUpForm = () => {
@@ -70,11 +57,7 @@ const SignUpForm = () => {
         main: "Please fill in all fields",
       }));
     } else if (errorsArr.every((err) => err == null)) {
-      const response = await signUp(
-        inputs.username,
-        inputs.email,
-        inputs.password,
-      );
+      const response = await signUp(inputs.email, inputs.password);
       if (response.error) {
         setErrors((prevState) => ({
           ...prevState,
@@ -88,21 +71,6 @@ const SignUpForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-      <div className="flex flex-col">
-        <label className="ml-4" htmlFor="username">
-          Username
-        </label>
-        <input
-          value={inputs.username}
-          onChange={handleChange}
-          className={`hover:border-indigo-700 ${!inputs.username?.length ? "border-transparent" : errors.username ? "border-red-500" : "border-indigo-700"} mt-2 w-full rounded-full border px-4 py-1 font-normal shadow transition-[border-color] focus:outline-none`}
-          id="username"
-          type="text"
-        />
-        <div className="mt-1 h-4 text-center text-red-600">
-          {errors.username}
-        </div>
-      </div>
       <div className="flex flex-col">
         <label className="ml-4" htmlFor="email">
           Email

@@ -6,7 +6,7 @@ import Error from "../components/Error";
 const ProtectedRoute = () => {
   const currentUser = useSelector((state: RootState) => state.currentUser);
   if (!currentUser) {
-    return <Error msg="You are not signed in" />;
+    return <Error>You are not signed in</Error>;
   }
   return <Outlet />;
 };

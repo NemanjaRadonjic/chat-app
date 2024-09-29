@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 const initialState = {
-  username: "",
   email: "",
   password: "",
   repeatPassword: "",

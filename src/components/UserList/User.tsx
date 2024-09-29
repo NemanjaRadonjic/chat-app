@@ -1,27 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import supabase from "../../supabase/client";
 import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import Avatar from "../Avatar";
+import { createChat, findChat } from "../../helpers/requests";
 
 type UserType = { id: string; email: string; isOnline: boolean };
-
-const findChat = async (initiator: string, reciever: string) => {
-  const { data: matchedChat } = await supabase
-    .from("chats")
-    .select()
-    .contains("members", JSON.stringify([initiator, reciever]));
-
-  return matchedChat?.length ? matchedChat[0].id : null;
-};
-
-const createChat = async (initiator: string, reciever: string) => {
-  const { data } = await supabase
-    .from("chats")
-    .insert({ members: [initiator, reciever] })
-    .select();
-
-  return data ? data[0].id : null;
-};
 
 const User = ({
   user,

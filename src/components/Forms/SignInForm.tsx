@@ -1,17 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import useForm from "../../hooks/useForm";
-import supabase from "../../supabase/client";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { signInAction } from "../../store/reducers/currentUser";
-
-const signIn = async (email: string, password: string) => {
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  });
-  return { data, error };
-};
+import { signIn } from "../../helpers/requests";
 
 const SignInForm = () => {
   const [inputs, onChange] = useForm();

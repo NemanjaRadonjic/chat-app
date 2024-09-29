@@ -9,9 +9,8 @@
   }
 
   html {
-    font-family: "OpenSans";
+    font-family: "OpenSans", Arial, sans-serif;
     color: rgb(31, 31, 31);
-    /* scrollbar-color: red orange; */
   }
 
   ::-webkit-scrollbar {

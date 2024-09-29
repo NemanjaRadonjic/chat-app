@@ -2,17 +2,6 @@ import { AuthFormErrorsType, AuthFormType } from "./types";
 
 const emailRegex = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
 
-export const validateUsername = (username: string) => {
-  if (!username.length) {
-    return "This field is required.";
-  } else if (username.length > 12) {
-    return "Username is too long.";
-  } else if (username.length < 4) {
-    return "Username is too short.";
-  }
-  return null;
-};
-
 export const validateEmail = (email: string) => {
   if (!email.length) {
     return "This field is required.";
