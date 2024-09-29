@@ -34,7 +34,11 @@ const UserList = ({
     .map((user) => (
       <User key={user.id} currentUserId={currentUserId} user={user} />
     ));
-  return <div className="flex gap-12 p-14">{renderUsers}</div>;
+  return (
+    <div className="mx-auto flex flex-wrap justify-center gap-12 p-14">
+      {renderUsers}
+    </div>
+  );
 };
 
 export default UserList;

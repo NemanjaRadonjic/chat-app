@@ -4,10 +4,20 @@ const AuthOptions = () => {
   return (
     <>
       <li>
-        <Link to="sign-in">Sign In</Link>
+        <Link
+          className="duration-400 transition-colors hover:text-blue-700"
+          to="sign-in"
+        >
+          Sign In
+        </Link>
       </li>
       <li>
-        <Link to="sign-up">Sign Up</Link>
+        <Link
+          className="duration-400 transition-colors hover:text-blue-700"
+          to="sign-up"
+        >
+          Sign Up
+        </Link>
       </li>
     </>
   );

@@ -11,6 +11,7 @@ import SignUp from "./routes/SignUp.tsx";
 import Chats from "./routes/Chats.tsx";
 import Chat from "./routes/Chat.tsx";
 import ProtectedRoute from "./routes/ProtectedRoute.tsx";
+import Error from "./components/Error/index.tsx";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,7 @@ const router = createBrowserRouter([
         element: <ProtectedRoute />,
         children: [{ path: "/chats/:chatId", element: <Chat /> }],
       },
+      { path: "*", element: <Error msg="Not Found." /> },
     ],
   },
 ]);

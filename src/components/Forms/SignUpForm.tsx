@@ -95,7 +95,7 @@ const SignUpForm = () => {
         <input
           value={inputs.username}
           onChange={handleChange}
-          className={`hover:border-accent ${!inputs.username?.length ? "border-transparent" : errors.username ? "border-red-500" : "border-accent"} mt-2 w-full rounded-full border px-4 py-1 font-normal shadow-md transition-[border-color] focus:outline-none`}
+          className={`hover:border-indigo-700 ${!inputs.username?.length ? "border-transparent" : errors.username ? "border-red-500" : "border-indigo-700"} mt-2 w-full rounded-full border px-4 py-1 font-normal shadow transition-[border-color] focus:outline-none`}
           id="username"
           type="text"
         />
@@ -110,7 +110,7 @@ const SignUpForm = () => {
         <input
           value={inputs.email}
           onChange={handleChange}
-          className={`hover:border-accent ${!inputs.email?.length ? "border-transparent" : errors.email ? "border-red-500" : "border-accent"} mt-2 w-full rounded-full border px-4 py-1 font-normal shadow-md transition-[border-color] focus:outline-none`}
+          className={`hover:border-indigo-700 ${!inputs.email?.length ? "border-transparent" : errors.email ? "border-red-500" : "border-indigo-700"} mt-2 w-full rounded-full border px-4 py-1 font-normal shadow transition-[border-color] focus:outline-none`}
           id="email"
           type="email"
         />
@@ -123,7 +123,7 @@ const SignUpForm = () => {
         <input
           value={inputs.password}
           onChange={handleChange}
-          className={`hover:border-accent ${!inputs.password?.length ? "border-transparent" : errors.password ? "border-red-500" : "border-accent"} mt-2 w-full rounded-full border px-4 py-1 font-normal shadow-md transition-[border-color] focus:outline-none`}
+          className={`hover:border-indigo-700 ${!inputs.password?.length ? "border-transparent" : errors.password ? "border-red-500" : "border-indigo-700"} mt-2 w-full rounded-full border px-4 py-1 font-normal shadow transition-[border-color] focus:outline-none`}
           id="password"
           type="password"
         />
@@ -138,7 +138,7 @@ const SignUpForm = () => {
         <input
           value={inputs.repeatPassword}
           onChange={handleChange}
-          className={`hover:border-accent ${!inputs.repeatPassword?.length ? "border-transparent" : errors.repeatPassword ? "border-red-500" : "border-accent"} mt-2 w-full rounded-full border px-4 py-1 font-normal shadow-md transition-[border-color] focus:outline-none`}
+          className={`hover:border-indigo-700 ${!inputs.repeatPassword?.length ? "border-transparent" : errors.repeatPassword ? "border-red-500" : "border-indigo-700"} mt-2 w-full rounded-full border px-4 py-1 font-normal shadow transition-[border-color] focus:outline-none`}
           id="repeatPassword"
           type="password"
         />
@@ -146,14 +146,14 @@ const SignUpForm = () => {
           {errors.repeatPassword}
         </div>
       </div>
-      <p className="mt-2">
+      <p className="mb-4 mt-4 text-center text-sm">
         Already have an account? Sign in{" "}
-        <Link to="/sign-in" className="text-accent underline">
+        <Link to="/sign-in" className="text-indigo-700 underline">
           here.
         </Link>
       </p>
       <button
-        className="from-accent rounded-full bg-gradient-to-r to-blue-500 bg-[length:300%] px-5 py-2 shadow-md transition-[background-size] hover:bg-[length:100%]"
+        className="rounded-full bg-gradient-to-r from-indigo-700 to-blue-500 bg-[length:300%] px-5 py-2 shadow-md transition-[background-size] duration-300 hover:bg-[length:100%]"
         type="submit"
       >
         Sign Up

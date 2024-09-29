@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import supabase from "../../supabase/client";
+import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
+import Avatar from "../Avatar";
 
 type UserType = { id: string; email: string; isOnline: boolean };
 
@@ -42,21 +44,16 @@ const User = ({
 
   return (
     <div
-      className="flex flex-col items-center gap-5 rounded-md border border-purple-100 px-5 py-10 shadow-sm"
+      className="flex flex-col items-center gap-10 rounded-md px-6 pb-5 pt-10 shadow"
       key={user.id}
     >
-      <div className="relative flex h-24 w-24 items-center justify-center rounded-full bg-blue-500 text-4xl">
-        <div>{user.email.charAt(0).toUpperCase()}</div>
-        <div
-          className={`absolute bottom-0 right-3 h-6 w-6 rounded-full ${user.isOnline ? "bg-green-400" : "bg-slate-400"}`}
-        />
-      </div>
+      <Avatar large email={user.email} isOnline={user.isOnline} />
       <p>{user.email}</p>
       <button
         onClick={handleClick}
-        className="from-accent rounded-full bg-gradient-to-r to-blue-500 bg-[length:300%] px-5 py-2 shadow-md transition-[background-size] hover:bg-[length:100%]"
+        className="flex items-center gap-3 rounded-full bg-gradient-to-r from-indigo-700 to-blue-500 bg-[length:200%] px-8 py-2 text-white shadow-md transition-[background-size] hover:bg-[length:100%]"
       >
-        Chat
+        Chat <IoChatbubbleEllipsesOutline size={20} />
       </button>
     </div>
   );

@@ -7,7 +7,7 @@ const AuthBar = () => {
   const currentUser = useSelector((state: RootState) => state.currentUser);
 
   return (
-    <ul className="flex flex-row gap-4">
+    <ul className="flex w-1/3 flex-row justify-end gap-4">
       {currentUser ? (
         <NavProfile currentUser={currentUser.user} />
       ) : (

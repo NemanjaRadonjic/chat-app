@@ -3,28 +3,31 @@
 @tailwind utilities;
 
 @layer base {
+  @font-face {
+    font-family: "OpenSans";
+    src: url("assets/fonts/OpenSans/OpenSans-VariableFont_wdth,wght.ttf");
+  }
+
   html {
+    font-family: "OpenSans";
     color: rgb(31, 31, 31);
     /* scrollbar-color: red orange; */
   }
-  /* width */
+
   ::-webkit-scrollbar {
     width: 6px;
   }
 
-  /* Track */
   ::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.1);
+    background-color: rgb(35, 76, 255, 0.1);
     border-radius: 50px;
   }
 
-  /* Handle */
   ::-webkit-scrollbar-thumb {
     background: #666666;
     border-radius: 10px;
   }
 
-  /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
     background: #4c16af;
   }

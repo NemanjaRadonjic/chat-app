@@ -53,7 +53,7 @@ const SignInForm = () => {
         <input
           value={inputs.email}
           onChange={handleChange}
-          className="hover:border-accent mt-2 w-full rounded-full border px-4 py-1 font-normal shadow-sm transition-[border-color] focus:outline-none"
+          className="mt-2 w-full rounded-full border border-transparent px-4 py-1 font-normal shadow transition-[border-color] hover:border-indigo-700 focus:outline-none"
           id="email"
           type="text"
         />
@@ -66,20 +66,20 @@ const SignInForm = () => {
         <input
           value={inputs.password}
           onChange={handleChange}
-          className="hover:border-accent mt-2 w-full rounded-full border px-4 py-1 font-normal shadow-sm transition-[border-color] focus:outline-none"
+          className="mt-2 w-full rounded-full border border-transparent px-4 py-1 font-normal shadow transition-[border-color] hover:border-indigo-700 focus:outline-none"
           id="password"
           type="password"
         />
       </div>
 
-      <p className="mt-2">
+      <p className="mb-4 mt-4 text-center text-sm">
         Don't have an account? Sign up{" "}
-        <Link to="/sign-in" className="text-accent underline">
+        <Link to="/sign-in" className="text-indigo-700 underline">
           here.
         </Link>
       </p>
       <button
-        className="from-accent rounded-full bg-gradient-to-r to-blue-500 bg-[length:300%] px-5 py-2 shadow-md transition-[background-size] hover:bg-[length:100%]"
+        className="rounded-full bg-gradient-to-r from-indigo-600 to-blue-500 bg-[length:300%] px-5 py-2 shadow-md transition-[background-size] duration-300 hover:bg-[length:100%]"
         type="submit"
       >
         Sign In

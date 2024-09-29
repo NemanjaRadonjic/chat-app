@@ -34,3 +34,7 @@ export type MessageType = {
   id: string;
   author: string;
 };
+
+export interface MessageWithAvatarType extends MessageType {
+  renderAvatar?: boolean;
+}

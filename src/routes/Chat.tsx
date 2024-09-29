@@ -6,6 +6,9 @@ import supabase from "../supabase/client";
 import Message from "../components/Message";
 import { MessageType } from "../helpers/types";
 import { flushSync } from "react-dom";
+import Avatar from "../components/Avatar";
+import { IoMdSend } from "react-icons/io";
+import { messagesWithAvatar } from "../helpers";
 
 type PayloadType = {
   new: MessageType;
@@ -47,6 +50,7 @@ const Chat = () => {
     await createMessage(message, currentUserId, chatId);
     setMessage("");
   };
+
   useEffect(() => {
     const channel = supabase
       .channel("messages")
@@ -81,34 +85,42 @@ const Chat = () => {
     })();
   }, [chatId]);
 
-  const renderMessages = messages.map((msg) => (
-    <Message key={msg.id} currentUserId={currentUserId} message={msg} />
-  ));
+  const renderMessages = messagesWithAvatar(messages, currentUserId).map(
+    (msg) => (
+      <Message
+        key={msg.id}
+        currentUserId={currentUserId}
+        message={msg}
+        email={recipient?.email}
+      />
+    ),
+  );
 
   return (
-    <div className="mx-auto mt-10 flex h-[calc(100vh-10rem)] w-1/2 flex-col gap-5 rounded bg-gradient-to-t from-neutral-100 to-blue-100 p-4 shadow-md">
-      <div className="text-center">
-        You are chatting with {recipient?.email}{" "}
-        {isOnline ? "is online" : "is offline"}
+    <div className="mx-auto mt-10 flex h-[calc(100vh-10rem)] w-2/3 flex-col rounded shadow-lg">
+      <div className="flex items-center gap-2 p-4">
+        <Avatar email={recipient?.email} isOnline={isOnline} />
+        <div>{recipient?.email}</div>
       </div>
       <div
         ref={messagesDivRef}
-        className="flex grow flex-col gap-4 overflow-y-scroll scroll-smooth rounded p-4 shadow-md"
+        className="flex grow flex-col-reverse gap-4 overflow-y-auto scroll-smooth rounded p-4 shadow-inner"
       >
-        {renderMessages}
+        {renderMessages.reverse()}
       </div>
       <form onSubmit={handleSubmit} className="flex">
         <input
           onChange={(e) => setMessage(e.target.value)}
           value={message}
-          className="grow px-4 shadow-md"
+          placeholder="Aa"
+          className="grow border-t border-blue-100 px-4 focus:outline-none"
           type="text"
         />
         <button
-          className="from-accent bg-gradient-to-r to-blue-500 px-4 py-1"
+          className="flex items-center gap-2 rounded-br-lg bg-gradient-to-r from-indigo-600 to-blue-500 px-4 py-1 text-white"
           type="submit"
         >
-          Send
+          Send <IoMdSend size={20} />
         </button>
       </form>
     </div>
