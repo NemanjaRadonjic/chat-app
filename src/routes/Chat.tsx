@@ -92,7 +92,7 @@ const Chat = () => {
   );
 
   return (
-    <div className="mx-auto mt-10 flex h-[calc(100vh-10rem)] w-2/3 flex-col rounded shadow-lg">
+    <div className="mx-auto flex h-[calc(100vh-50px)] w-full flex-col rounded shadow-lg md:mt-10 md:h-[calc(100vh-10rem)] md:w-2/3">
       <div className="flex items-center gap-2 p-4">
         <Avatar email={recipient?.email} isOnline={isOnline} />
         <div>{recipient?.email}</div>
@@ -108,10 +108,15 @@ const Chat = () => {
           ref={messagesDivRef}
           className="flex grow flex-col-reverse gap-4 overflow-y-auto scroll-smooth rounded p-4 shadow-inner"
         >
-          {renderMessages.reverse()}
+          {!messages.length ? (
+            <div className="mb-10 self-center italic text-gray-400">
+              Start chatting!
+            </div>
+          ) : (
+            renderMessages.reverse()
+          )}
         </div>
       )}
-
       <form onSubmit={handleSubmit} className="flex">
         <input
           onChange={(e) => setMessage(e.target.value)}

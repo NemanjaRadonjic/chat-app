@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const ErrorElement = ({ children }: { children: ReactNode }) => {
+const Error = ({ children }: { children: ReactNode }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -23,4 +23,4 @@ const ErrorElement = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export default ErrorElement;
+export default Error;

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import AuthBar from "./AuthBar";
 import { IoMdChatbubbles } from "react-icons/io";
+
 const Navbar = () => {
   return (
     <nav className="px-5 py-3 shadow-sm">

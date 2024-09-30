@@ -1,17 +1,11 @@
-import { useDispatch } from "react-redux";
-import { signOutAction } from "../../../store/reducers/currentUser";
 import Avatar from "../../Avatar";
 
-type CurrentUser = { email: string };
+type NavProfileProps = {
+  currentUser: { email: string };
+  signOut: VoidFunction;
+};
 
-const NavProfile = ({ currentUser }: { currentUser: CurrentUser }) => {
-  const dispatch = useDispatch();
-
-  const handleClick = () => {
-    window.localStorage.removeItem("currentUser");
-    dispatch(signOutAction());
-  };
-
+const NavProfile = ({ currentUser, signOut }: NavProfileProps) => {
   return (
     <li className="flex gap-4">
       <div className="flex items-center gap-2">
@@ -20,7 +14,7 @@ const NavProfile = ({ currentUser }: { currentUser: CurrentUser }) => {
       </div>
       <button
         className="duration-400 transition-colors hover:text-blue-700"
-        onClick={handleClick}
+        onClick={signOut}
       >
         Sign Out
       </button>
