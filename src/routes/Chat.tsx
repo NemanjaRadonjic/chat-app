@@ -36,19 +36,24 @@ const Chat = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!message.trim().length) {
+      setMessage("");
+      return;
+    }
     await createMessage(message, currentUserId, chatId);
     setMessage("");
   };
 
   useEffect(() => {
     const channel = supabase
-      .channel("messages")
+      .channel(`messages:chat-${chatId}`)
       .on(
         "postgres_changes",
         {
           event: "INSERT",
           schema: "public",
           table: "messages",
+          filter: `chatId=eq.${chatId}`,
         },
         (payload: PayloadType) => {
           flushSync(() =>
